@@ -41,6 +41,9 @@ ENV UPDATES=disabled
 ENV REPLICATION_URL=https://planet.openstreetmap.org/replication/hour/
 ENV MAX_INTERVAL_SECONDS=3600
 
+# Make serving folder configurable
+ENV OSM_TILE_FOLDER=tile
+
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Get packages
@@ -147,7 +150,7 @@ RUN mkdir -p /run/renderd/ \
 ;
 
 RUN echo '[default] \n\
-URI=/tile/ \n\
+URI=/{$OSM_TILE_FOLDER}/ \n\
 TILEDIR=/var/cache/renderd/tiles \n\
 XML=/home/renderer/src/openstreetmap-carto/mapnik.xml \n\
 HOST=localhost \n\
